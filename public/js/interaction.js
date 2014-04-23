@@ -1,9 +1,11 @@
 $("img.choice").click(function () {
     var $this = $(this),
-        choice = $this.attr("title");
+        choice = $this.attr("title"),
+        $img = $(document.createElement("img"));
 
-    $.get("/ajax/" + choice, function (data) {
-        $this.closest(".choiceDisplay").html(data);
-    });
+    $img.attr("src", "img/full/" + choice + ".png")
+        .attr("title", choice).attr("alt", choice);
+
+    $this.closest("ul").siblings(".choiceDisplay").html($img);
 });
 

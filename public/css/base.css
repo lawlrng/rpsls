@@ -3,6 +3,8 @@ body {
     width: 900px;
     margin: 0px auto;
     position: relative;
+    font-size: 15px;
+    font-family: sans-serif;
 }
 
 #player-1, #player-2 {
@@ -24,7 +26,7 @@ body {
 }
 
 .choiceDisplay {
-    height: 400px;
+    height: 450px;
     width: 400px;
 }
 

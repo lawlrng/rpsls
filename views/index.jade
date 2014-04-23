@@ -1,11 +1,6 @@
 mixin player(name)
     .choiceDisplay
 
-    label Human
-        input(type='radio' name='#{name}')
-    label Computer
-        input(type='radio' name='#{name}')
-
     ul
         each c in ['rock', 'paper', 'scissors', 'lizard', 'spock']
             li: img.choice(src='img/thumb/#{c}.png' alt='#{c}' title='#{c}')
