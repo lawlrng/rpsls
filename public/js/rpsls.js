@@ -15,26 +15,28 @@ var R = {
     },
 
     determineWinner: function(p1, p2, cb) {
-        var outcomes;
+        var outcomes,
+            relations = this.relations,
+            stats = this.stats;
 
-        stats.total += 1;
+        stats.total++;
 
         if (p1 === p2) {
             cb("No one wins!", 0);
 
-            stats.ties += 1;
+            stats.ties++;
         } else {
             outcomes = relations[p1];
 
             if (p2 in outcomes) {
                 cb(p1 + ' ' + outcomes[p2] + ' ' + p2, 1);
 
-                stats.player += 1;
+                stats.player++;
             } else {
                 outcomes = relations[p2];
                 cb(p2 + ' ' + outcomes[p1] + ' ' + p1, -1);
 
-                stats.comp += 1;
+                stats.comp++;
             }
         }
     }
