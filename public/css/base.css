@@ -44,3 +44,19 @@ li {
 li.selected, li:hover {
     border: 2px #BD52FF solid;
 }
+
+.wrap { clear: both; }
+
+legend {
+    font-weight: bold;
+    font-size: 130%;
+}
+
+span.header {
+    font-size: 110%;
+    display: inline-block;
+    width: 170px;
+    text-align: right;
+    margin-right: 5px;
+    font-weight: bold;
+}

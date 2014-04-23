@@ -2,6 +2,17 @@ $(document).ready(function () {
     var selected = 0,
 
         displayWinner = function (msg) {
+            $("#msg").text(msg);
+            updateStats(R.stats);
+        },
+
+        updateStats = function (stats) {
+            console.log("Hi!");
+            console.log(stats);
+            $("#humanStats").text(stats.player);
+            $("#computerStats").text(stats.comp);
+            $("#tieStats").text(stats.ties);
+            $("#totalStats").text(stats.total);
         };
 
     /*
@@ -60,9 +71,7 @@ $(document).ready(function () {
         } else {
             R.determineWinner($("ul[data-type='human'] li.selected").attr("title"),
                               $("ul[data-type='computer'] li.selected").attr("title"),
-                              function (msg) {
-                                console.log(msg);
-                            });
+                              displayWinner);
             selected = 0;
         }
     });

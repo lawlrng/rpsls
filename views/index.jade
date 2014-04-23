@@ -30,6 +30,27 @@ html(lang='en')
 
         h1#vs VS.
 
+        .wrap
+            p#results
+                span Result:
+                span#msg
+
+            fieldset
+                legend Stats
+                div
+                    label
+                        span.header Human:
+                        span#humanStats 0
+                    label
+                        span.header Computer:
+                        span#computerStats 0
+                    label
+                        span.header Ties:
+                        span#tieStats 0
+                    label
+                        span.header Total:
+                        span#totalStats 0
+
         script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')
         script(src='js/rpsls.js')
         script(src='js/interaction.js')

@@ -19,24 +19,24 @@ var R = {
             relations = this.relations,
             stats = this.stats;
 
-        stats.total++;
+        ++stats.total;
 
         if (p1 === p2) {
-            cb("No one wins. It's a tie!");
+            ++stats.ties;
 
-            stats.ties++;
+            cb("No one wins. It's a tie!");
         } else {
             outcomes = relations[p1];
 
             if (p2 in outcomes) {
-                cb(p1 + ' ' + outcomes[p2] + ' ' + p2 + '. Player 1 wins!');
+                ++stats.player;
 
-                stats.player++;
+                cb(p1 + ' ' + outcomes[p2] + ' ' + p2 + '. Player 1 wins!');
             } else {
+                ++stats.comp;
+
                 outcomes = relations[p2];
                 cb(p2 + ' ' + outcomes[p1] + ' ' + p1 + '. Player 2 wins!');
-
-                stats.comp++;
             }
         }
     }
