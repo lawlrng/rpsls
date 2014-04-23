@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    var selected = 0;
+    var selected = 0,
+
+        displayWinner = function (msg) {
+        };
 
     /*
      * Extend .html with the ability to fire the 'change' event.
@@ -16,6 +19,7 @@ $(document).ready(function () {
         };
     })();
 
+    // Updates the div target with the big image of the selected choice.
     $("li.choice").click(function () {
         var $this = $(this),
             choice = $this.attr("title"),
@@ -30,6 +34,7 @@ $(document).ready(function () {
         $this.closest("ul").siblings(".choiceDisplay").html($img);
     });
 
+    // Randomly selects a move.
     $("input[value='Random']").click(function () {
         var $this = $(this),
             $ul = $this.siblings("ul"),
@@ -39,6 +44,7 @@ $(document).ready(function () {
         $ul.children("li[title='" + move + "']").addClass("selected").click();
     });
 
+    // Called when a move is selected.
     $("div.choiceDisplay").change(function () {
         var $this = $(this);
 
@@ -54,14 +60,8 @@ $(document).ready(function () {
         } else {
             R.determineWinner($("ul[data-type='human'] li.selected").attr("title"),
                               $("ul[data-type='computer'] li.selected").attr("title"),
-                              function (msg, winner) {
-                                if (winner == 1) {
-                                    console.log(msg + ' Player 1 wins!');
-                                } else if (winner == 0) {
-                                    console.log(msg + ' A tie!');
-                                } else {
-                                    console.log(msg + ' Player 2 wins!');
-                                }
+                              function (msg) {
+                                console.log(msg);
                             });
             selected = 0;
         }
