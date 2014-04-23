@@ -1,0 +1,18 @@
+{
+  "name": "rpsls",
+  "version": "0.0.1",
+  "author": "Lawlrng <lawlrng@gmail.com>",
+  "description": "Simple website to play Rock Paper Scissors Lizard Spock.",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.0.0",
+    "jade": "^1.3.1",
+    "morgan": "^1.0.0"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": "0.11.x"
+  }
+}
