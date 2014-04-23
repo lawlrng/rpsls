@@ -1,0 +1,45 @@
+body {
+    background-color: #ccc;
+    width: 900px;
+    margin: 0px auto;
+    position: relative;
+}
+
+#player-1, #player-2 {
+    text-align: center;
+}
+
+#player-1 {
+    float: left;
+}
+
+#player-2 {
+    float: right;
+}
+
+#vs {
+    position: absolute;
+    top: 200px;
+    left: 425px;
+}
+
+.choiceDisplay {
+    height: 400px;
+    width: 400px;
+}
+
+input[type='radio'] {
+    padding-left: 5px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+ul li {
+    display: inline-block;
+    margin-right: 10px;
+}

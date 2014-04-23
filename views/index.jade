@@ -1,0 +1,38 @@
+mixin player(name)
+    .choiceDisplay
+
+    label Human
+        input(type='radio' name='#{name}')
+    label Computer
+        input(type='radio' name='#{name}')
+
+    ul
+        each c in ['rock', 'paper', 'scissors', 'lizard', 'spock']
+            li: img.choice(src='img/thumb/#{c}.png' alt='#{c}' title='#{c}')
+
+    input(type='button' value='Random')
+
+doctype
+
+html(lang='en')
+    head
+        meta(charset='utf-8')
+
+        title RPSLS!
+
+        link(href='css/base.css', rel='stylesheet')
+    body
+        #player-1
+            h1 Player 1
+
+            +player('one')
+
+        #player-2
+            h1 Player 2
+
+            +player('two')
+
+        h1#vs VS.
+
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')
+        script(src='js/interaction.js')
