@@ -1,11 +1,12 @@
 mixin player(name)
-    .choiceDisplay
+    div(data-type='#{name}').choiceDisplay
 
-    ul
+    ul(data-type='#{name}')
         each c in ['rock', 'paper', 'scissors', 'lizard', 'spock']
-            li: img.choice(src='img/thumb/#{c}.png' alt='#{c}' title='#{c}')
+            li.choice(title='#{c}')
+                img(src='img/thumb/#{c}.png' alt='#{c}')
 
-    input(type='button' value='Random')
+    input(type='button' value='Random' data-type='#{name}')
 
 doctype
 
@@ -20,12 +21,12 @@ html(lang='en')
         #player-1
             h1 Player 1
 
-            +player('one')
+            +player('human')
 
         #player-2
             h1 Computer 
 
-            +player('two')
+            +player('computer')
 
         h1#vs VS.
 

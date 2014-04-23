@@ -1,20 +1,20 @@
 var R = {
     relations: {
             'rock': {'scissors': 'crushes', 'lizard': 'crushes'},
-            'paper': {'rock': 'covers': 'spock': 'disproves'},
+            'paper': {'rock': 'covers', 'spock': 'disproves'},
             'scissors': {'paper': 'cut', 'lizard': 'decapitate'},
             'spock': {'rock': 'vaporizes', 'scissors': 'smashes'},
             'lizard': {'spock': 'poison', 'paper': 'eat'}
     },
 
-    stats = { comp: 0, player: 0, ties: 0, total: 0},
+    stats: { comp: 0, player: 0, ties: 0, total: 0},
 
-    randomMove = function () {
-        var keys = Object.keys(relations);
+    randomMove: function () {
+        var keys = Object.keys(this.relations);
         return keys[Math.floor(Math.random() * keys.length)];
     },
 
-    determineWinner(p1, p2, cb) {
+    determineWinner: function(p1, p2, cb) {
         var outcomes;
 
         stats.total += 1;
@@ -38,4 +38,4 @@ var R = {
             }
         }
     }
-}
+};
