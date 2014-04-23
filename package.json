@@ -1,6 +1,6 @@
 {
   "name": "rpsls",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Lawlrng <lawlrng@gmail.com>",
   "description": "Simple website to play Rock Paper Scissors Lizard Spock.",
   "scripts": {

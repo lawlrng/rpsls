@@ -1,3 +1,18 @@
+/*
+ * Extend .html with the ability to fire the 'change' event.
+ * See: http://stackoverflow.com/a/17908068
+ */
+(function () {
+    var oldHtml = $.fn.html;
+    $.fn.html = function () {
+        var ret = oldHtml.apply(this, arguments);
+
+        this.trigger('change');
+
+        return ret;
+    };
+})();
+
 $("img.choice").click(function () {
     var $this = $(this),
         choice = $this.attr("title"),
@@ -13,3 +28,6 @@ $("img.choice").click(function () {
     $this.closest("ul").siblings(".choiceDisplay").html($img);
 });
 
+$("input[value='Random']").click(function () {
+    var $this = $(this),
+        $ul = $this.siblings("ul"),
