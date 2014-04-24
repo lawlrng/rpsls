@@ -38,9 +38,6 @@ var R = {
     randomMove: function (moveArray) {
         var keys = moveArray || this.keys;
 
-        console.log("Calling dumb move!");
-        console.log(keys);
-
         return keys[Math.floor(Math.random() * keys.length)];
     },
 
@@ -72,7 +69,6 @@ var R = {
             });
         });
 
-        console.log(movePool);
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
     },
 
