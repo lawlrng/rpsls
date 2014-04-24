@@ -1,4 +1,5 @@
 Simple web implentation of Rock Paper Scissors Lizard Spock.
 
-Run npm install after cloning to download the dependcies. You should be good to go
-after that.
+Run npm install to get the dependcies.
+Then run npm start to go.
+Assuming it didn't break, you should be good to go locally. =)
