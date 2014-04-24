@@ -2,13 +2,15 @@ Simple web implentation of Rock Paper Scissors Lizard Spock.
 
 Created for a series of challenges at r/dailyprogrammer.
 
-See:
-
-[Easy Challenge](http://www.reddit.com/r/dailyprogrammer/comments/23lfrf/4212014_challenge_159_easy_rock_paper_scissors/)
+See: [Easy Challenge](http://www.reddit.com/r/dailyprogrammer/comments/23lfrf/4212014_challenge_159_easy_rock_paper_scissors/)
 [Medium Challenge](http://www.reddit.com/r/dailyprogrammer/comments/23lfrf/4212014_challenge_159_easy_rock_paper_scissors/)
 
 To install locally:
+
 1. Clone the repo
+
 2. Run 'npm install' in the directory (Assumes you have npm installed).
+
 3. Run 'npm start' or node app.js to begin the process running.
+
 4. Assuming nothing's broken, you should be good to go.
