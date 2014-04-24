@@ -68,6 +68,15 @@ legend {
     font-size: 130%;
 }
 
+#ai label {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#ai label:first-child { margin-left: 15px; }
+
+#reset { float: right; }
+
 span.header {
     font-size: 110%;
     display: inline-block;
