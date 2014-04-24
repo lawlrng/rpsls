@@ -14,6 +14,11 @@ var R = {
         return keys[Math.floor(Math.random() * keys.length)];
     },
 
+    // Borrowed from MDN.
+    prettyPercent: function (num) {
+        return parseFloat(Math.round(num / this.stats.total + 'e+4') + 'e-2');
+    },
+
     determineWinner: function(p1, p2, cb) {
         var outcomes,
             relations = this.relations,

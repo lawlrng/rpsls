@@ -71,8 +71,13 @@ legend {
 span.header {
     font-size: 110%;
     display: inline-block;
-    width: 170px;
+    width: 80px;
     text-align: right;
     margin-right: 5px;
     font-weight: bold;
+}
+
+span.header + span {
+    display: inline-block;
+    width: 130px;
 }

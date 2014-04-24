@@ -7,11 +7,13 @@ $(document).ready(function () {
         },
 
         updateStats = function (stats) {
-            console.log("Hi!");
-            console.log(stats);
-            $("#humanStats").text(stats.player);
-            $("#computerStats").text(stats.comp);
-            $("#tieStats").text(stats.ties);
+            var pl = stats.player,
+                cp = stats.comp,
+                ti = stats.ties;
+
+            $("#humanStats").text(pl + ' - ' + R.prettyPercent(pl) + '%');
+            $("#computerStats").text(cp + ' - ' + R.prettyPercent(cp) + '%');
+            $("#tieStats").text(ti + ' - ' + R.prettyPercent(ti) + '%');
             $("#totalStats").text(stats.total);
         };
 
