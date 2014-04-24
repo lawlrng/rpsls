@@ -6,6 +6,14 @@ $(document).ready(function () {
             updateStats(R.stats);
         },
 
+        reset = function () {
+            R.reset();
+            updateStats(R.stats);
+            $("input[value='smart']").prop("checked", true);
+            $("div.choiceDisplay").empty();
+            $(".selected").removeClass("selected");
+        },
+
         updateStats = function (stats) {
             var pl = stats.player,
                 cp = stats.comp,
@@ -59,6 +67,12 @@ $(document).ready(function () {
         $ul.children("li[title='" + move + "']").addClass("selected").click();
     });
 
+    // Resets stats, radio selection, 
+    $("#btnReset").click(function () {
+        reset();
+        selected = 0;
+    });
+
     // Called when a move is selected.
     $("div.choiceDisplay").change(function () {
         var $this = $(this);
@@ -72,7 +86,7 @@ $(document).ready(function () {
             } else {
                 $("input[data-type='human']").click();
             }
-        } else {
+        } else if (selected === 2) {
             R.determineWinner($("ul[data-type='human'] li.selected").attr("title"),
                               $("ul[data-type='computer'] li.selected").attr("title"),
                               displayWinner);
