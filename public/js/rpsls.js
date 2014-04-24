@@ -7,12 +7,61 @@ var R = {
             'lizard': {'spock': 'poison', 'paper': 'eat'}
     },
 
+    counters: {
+        'rock': ['paper', 'spock'],
+        'paper': ['scissors', 'lizard'],
+        'scissors': ['rock', 'spock'],
+        'spock': ['paper', 'lizard'],
+        'lizard': ['rock', 'scissors']
+    },
+
+    keys: ['rock', 'paper', 'scissors', 'spock', 'lizard'],
+
     stats: { comp: 0, player: 0, ties: 0, total: 0},
 
-    randomMove: function () {
-        var keys = Object.keys(this.relations);
+    seen: {'rock': 0, 'paper': 0, 'scissors': 0, 'spock': 0, 'lizard': 0},
+
+    randomMove: function (moveArray) {
+        var keys = moveArray || this.keys;
+
+        console.log("Calling dumb move!");
+        console.log(keys);
+
         return keys[Math.floor(Math.random() * keys.length)];
     },
+
+    smartMove: function () {
+        var mostUsed = [],
+            movePool = [],
+            that = this,
+            currentMax = -1;
+
+        // determine a list of most used moves.
+        $.each(this.keys, function (i, k) {
+            var localMax = that.seen[k];
+
+            if (localMax > currentMax) {
+                mostUsed = [k];
+                currentMax = localMax;
+            } else if (localMax === currentMax) {
+                mostUsed.push(k);
+            }
+        });
+
+        // filter most used move counters down to only ones that will win.
+        // Avoiding ties.
+        $.each(mostUsed, function (i, m) {
+            $.each(that.counters[m], function (j, c) {
+                if (mostUsed.indexOf(c) === -1 && movePool.indexOf(c) === -1) {
+                    movePool.push(c);
+                }
+            });
+        });
+
+        console.log(movePool);
+        return this.randomMove(movePool.length > 0 ? movePool : undefined);
+    },
+
 
     // Borrowed from MDN.
     prettyPercent: function (num) {
@@ -25,6 +74,8 @@ var R = {
             stats = this.stats;
 
         ++stats.total;
+
+        this.seen[p1]++;
 
         if (p1 === p2) {
             ++stats.ties;

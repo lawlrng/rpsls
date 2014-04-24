@@ -36,6 +36,16 @@ html(lang='en')
                 span#msg
 
             fieldset
+                legend Controls
+                span#ai.controls
+                    label Smart AI
+                        input(type='radio' value='smart' name='ai' checked)
+                    label Dumb AI
+                        input(type='radio' value='dumb' name='ai')
+                span#reset.controls
+                    input(type='button' value='Reset')
+
+            fieldset
                 legend Stats
                 div
                     label

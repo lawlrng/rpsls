@@ -51,7 +51,9 @@ $(document).ready(function () {
     $("input[value='Random']").click(function () {
         var $this = $(this),
             $ul = $this.siblings("ul"),
-            move = R.randomMove();
+            move;
+
+        move = $("input[value='smart']").is(":checked") ? R.smartMove() : R.randomMove();
 
         $ul.children("li").removeClass("selected");
         $ul.children("li[title='" + move + "']").addClass("selected").click();
