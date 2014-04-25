@@ -83,7 +83,7 @@ var R = {
     },
 
     smartMove: function () {
-        var movePool = this.getMovePool(this.getMostUsed);
+        var movePool = this.getMovePool(this.getMostUsed());
 
         console.log("Smart");
 
@@ -117,7 +117,7 @@ var R = {
         if (currentChain >= 3) {
             movePool = this.getMovePool([lastMove]);
         } else { // Add in the latest move 
-            if (mostUsed.indexOf(lastMove) === -1) {
+            if (lastMove && mostUsed.indexOf(lastMove) === -1) {
                 mostUsed.push(lastMove);
             }
 
