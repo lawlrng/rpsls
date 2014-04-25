@@ -71,15 +71,11 @@ MakePlayer.prototype.getMovePool = function (moves) {
 MakePlayer.prototype.randomMove = function (moveArray) {
         var keys = moveArray || this.keys;
 
-        console.log("Random");
-
         return keys[Math.floor(Math.random() * keys.length)];
     };
 
 MakePlayer.prototype.smartMove = function () {
         var movePool = this.getMovePool(this.getMostUsed());
-
-        console.log("Smart");
 
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
     };
@@ -93,8 +89,6 @@ MakePlayer.prototype.smarterMove = function () {
             tmp,
             movePool,
             that = this;
-
-        console.log("Smarter");
 
         // Look for a long chain for the last moves.
         for(; i >= 0; i--) {
