@@ -29,7 +29,7 @@ html(lang='en')
         link(href='css/base.css', rel='stylesheet')
     body
         #player-1
-            h1 Player 1
+            h1 Human
 
             +player('human')
 
@@ -47,6 +47,8 @@ html(lang='en')
 
             fieldset
                 legend Controls
+                span#sim
+                    input#btnSimulation(type='button' value='Simulate (10000)')
                 span#reset.controls
                     input#btnReset(type='button' value='Reset')
 
