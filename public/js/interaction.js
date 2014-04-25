@@ -16,6 +16,17 @@ $(document).ready(function () {
             $(".selected").removeClass("selected");
         },
 
+        getMoveFunc = function (type) {
+            switch ($("input[type='radio'][data-type='" + type + "']:selected").attr("value")) {
+                case "dumb":
+                    return players[type].randomMove();
+                case "smart":
+                    return players[type].smartMove();
+                case "smarter":
+                    return players[type].smarterMove();
+            }
+        },
+
         updateStats = function (stats) {
             var pl = stats.player,
                 cp = stats.comp,
@@ -65,22 +76,28 @@ $(document).ready(function () {
             $ul = $this.siblings("ul"),
             type = $this.attr("data-type"),
             player = players[type],
-            move;
-
-        switch ($("input[type='radio'][name='" + type + "']:checked").attr("value")) {
-            case "dumb":
-                move = player.randomMove();
-                break;
-            case "smart":
-                move = player.smartMove();
-                break;
-            case "smarter":
-                move = player.smarterMove();
-                break;
-        }
+            move = getMoveFunc(type)();
 
         $ul.children("li").removeClass("selected");
         $ul.children("li[title='" + move + "']").addClass("selected").click();
+    });
+
+    $("#btnSimulate").click(function () {
+        var human = players['human'],
+            computer = player['computer'],
+            humanMove = getMoveFunc('human'),
+            computerMove = getMoveFunc('computer'),
+            tmpHuman,
+            tmpComputer,
+            i = 10000;
+
+        for (; i > 0; i++) {
+            tmpHuman = humanMove();
+            tmpComputer = computerMove();
+            R.determineWinner(tmpHuman, tmpComputer);
+        }
+
+        updateStats(R.stats);
     });
 
     // Resets stats, radio selection, 
