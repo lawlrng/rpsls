@@ -21,6 +21,8 @@ $(document).ready(function () {
                 cp = stats.comp,
                 ti = stats.ties;
 
+            console.log(cp);
+
             $("#humanStats").text(pl + ' - ' + R.prettyPercent(pl) + '%');
             $("#computerStats").text(cp + ' - ' + R.prettyPercent(cp) + '%');
             $("#tieStats").text(ti + ' - ' + R.prettyPercent(ti) + '%');

@@ -21,11 +21,6 @@ MakePlayer.prototype.reset = function () {
     $.each(Object.keys(this.seen), function (i, k) {
         that.seen[k] = 0;
     });
-
-    // reset the stats.
-    $.each(Object.keys(this.stats), function (i, k) {
-        that.stats[k] = 0;
-    });
 };
 
 
@@ -128,7 +123,7 @@ MakePlayer.prototype.smarterMove = function () {
     };
 
 var R = {
-    stats: { player: 0, opponent: 0, ties: 0, total: 0 },
+    stats: { player: 0, comp: 0, ties: 0, total: 0 },
 
     relations: {
         'rock': {'scissors': 'crushes', 'lizard': 'crushes'},
@@ -136,6 +131,12 @@ var R = {
         'scissors': {'paper': 'cut', 'lizard': 'decapitate'},
         'spock': {'rock': 'vaporizes', 'scissors': 'smashes'},
         'lizard': {'spock': 'poison', 'paper': 'eat'}
+    },
+
+    reset: function () {
+        $.each(this.stats, function (i, k) {
+            stats[k] = 0;
+        });
     },
 
     prettyPercent: function (num) {
