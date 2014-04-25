@@ -1,5 +1,7 @@
 $(document).ready(function () {
     var selected = 0,
+        players = { "human": new MakePlayer(),
+                    "computer": new MakePlayer()},
 
         displayWinner = function (msg) {
             $("#msg").text(msg);
@@ -60,17 +62,18 @@ $(document).ready(function () {
         var $this = $(this),
             $ul = $this.siblings("ul"),
             type = $this.attr("data-type"),
+            player = players[type],
             move;
 
         switch ($("input[type='radio'][name='" + type + "']:checked").attr("value")) {
             case "dumb":
-                move = R.randomMove();
+                move = player.randomMove();
                 break;
             case "smart":
-                move = R.smartMove();
+                move = player.smartMove();
                 break;
             case "smarter":
-                move = R.smarterMove();
+                move = player.smarterMove();
                 break;
         }
 

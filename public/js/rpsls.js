@@ -1,64 +1,62 @@
-var R = {
-    relations: {
-            'rock': {'scissors': 'crushes', 'lizard': 'crushes'},
-            'paper': {'rock': 'covers', 'spock': 'disproves'},
-            'scissors': {'paper': 'cut', 'lizard': 'decapitate'},
-            'spock': {'rock': 'vaporizes', 'scissors': 'smashes'},
-            'lizard': {'spock': 'poison', 'paper': 'eat'}
-    },
+function MakePlayer() {
+        this.stats = { player: 0, opponent: 0, ties: 0, total: 0 };
+        this.seen = { rock: 0, paper: 0, scissors: 0, spock: 0, lizard: 0};
+        this.maxHold = 10;
+        this.lastXMoves = [];
+}
 
-    counters: {
-        'rock': ['paper', 'spock'],
-        'paper': ['scissors', 'lizard'],
-        'scissors': ['rock', 'spock'],
-        'spock': ['paper', 'lizard'],
-        'lizard': ['rock', 'scissors']
-    },
+MakePlayer.prototype.relations = {
+    'rock': {'scissors': 'crushes', 'lizard': 'crushes'},
+    'paper': {'rock': 'covers', 'spock': 'disproves'},
+    'scissors': {'paper': 'cut', 'lizard': 'decapitate'},
+    'spock': {'rock': 'vaporizes', 'scissors': 'smashes'},
+    'lizard': {'spock': 'poison', 'paper': 'eat'}
+};
 
-    keys: ['rock', 'paper', 'scissors', 'spock', 'lizard'],
+MakePlayer.prototype.counters = {
+    'rock': ['paper', 'spock'],
+    'paper': ['scissors', 'lizard'],
+    'scissors': ['rock', 'spock'],
+    'spock': ['paper', 'lizard'],
+    'lizard': ['rock', 'scissors']
+};
 
-    stats: { comp: 0, player: 0, ties: 0, total: 0},
+MakePlayer.prototype.keys = ['rock', 'paper', 'scissors', 'spock', 'lizard'];
 
-    seen: {'rock': 0, 'paper': 0, 'scissors': 0, 'spock': 0, 'lizard': 0},
+MakePlayer.prototype.reset = function () {
+    var that = this;
 
-    maxHold: 10, // Handles how many moves it's seen last.
+    // reset the seen values.
+    $.each(Object.keys(this.seen), function (i, k) {
+        that.seen[k] = 0;
+    });
 
-    lastXMoves: [],
+    // reset the stats.
+    $.each(Object.keys(this.stats), function (i, k) {
+        that.stats[k] = 0;
+    });
+};
 
-    reset: function () {
-        var that = this;
+MakePlayer.prototype.getMostUsed = function () {
+    var mostUsed,
+        that = this,
+        currentMax = -1;
 
-        // reset the seen values.
-        $.each(Object.keys(this.seen), function (i, k) {
-            that.seen[k] = 0;
-        });
+    $.each(this.keys, function (i, k) {
+        var localMax = that.seen[k];
 
-        // reset the stats.
-        $.each(Object.keys(this.stats), function (i, k) {
-            that.stats[k] = 0;
-        });
-    },
+        if (localMax > currentMax) {
+            mostUsed = [k];
+            currentMax = localMax;
+        } else if (localMax === currentMax) {
+            mostUsed.push(k);
+        }
+    });
 
-    getMostUsed: function () {
-        var mostUsed,
-            that = this,
-            currentMax = -1;
+    return mostUsed;
+};
 
-        $.each(this.keys, function (i, k) {
-            var localMax = that.seen[k];
-
-            if (localMax > currentMax) {
-                mostUsed = [k];
-                currentMax = localMax;
-            } else if (localMax === currentMax) {
-                mostUsed.push(k);
-            }
-        });
-
-        return mostUsed;
-    },
-
-    getMovePool: function (moves) {
+MakePlayer.prototype.getMovePool = function () {
         var that = this,
             movePool = [];
 
@@ -71,26 +69,26 @@ var R = {
         });
 
         return movePool;
-    },
+    };
 
-
-    randomMove: function (moveArray) {
+MakePlayer.prototype.randomMove = function () {
         var keys = moveArray || this.keys;
 
         console.log("Random");
 
         return keys[Math.floor(Math.random() * keys.length)];
-    },
+    };
 
-    smartMove: function () {
+MakePlayer.prototype.smartMove = function () {
         var movePool = this.getMovePool(this.getMostUsed());
 
         console.log("Smart");
 
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
-    },
+    };
 
-    smarterMove: function () {
+MakePlayer.prototype.smarterMove = function () {
+
         var mostUsed = this.getMostUsed(),
             i = this.lastXMoves.length - 1,
             lastMove = this.lastXMoves[i--],
@@ -125,18 +123,17 @@ var R = {
         }
 
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
-    },
+    };
 
-    // Borrowed from MDN.
-    prettyPercent: function (num) {
+MakePlayer.prototype.prettyPercent = function (num) {
         if (this.stats.total !== 0) {
             return parseFloat(Math.round(num / this.stats.total + 'e+4') + 'e-2');
         } else {
             return 0.0;
         }
-    },
+    };
 
-    determineWinner: function(p1, p2, cb) {
+MakePlayer.prototype.determineWinner = function (p1, p2, cb) {
         var outcomes,
             relations = this.relations,
             stats = this.stats;
@@ -170,5 +167,4 @@ var R = {
                 cb(p2 + ' ' + outcomes[p1] + ' ' + p1 + '. Player 2 wins!');
             }
         }
-    }
-};
+    };
