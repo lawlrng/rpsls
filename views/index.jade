@@ -8,6 +8,16 @@ mixin player(name)
 
     input(type='button' value='Random' data-type='#{name}')
 
+    fieldset
+        legend Random Button AI 
+        span(class='#{name} controls' id='ai')
+            label Smarter(?) AI
+                input(type='radio' value='smarter' name='#{name}' checked)
+            label Smart AI
+                input(type='radio' value='smart' name='#{name}')
+            label Dumb AI
+                input(type='radio' value='dumb' name='#{name}')
+
 doctype
 
 html(lang='en')
@@ -37,11 +47,6 @@ html(lang='en')
 
             fieldset
                 legend Controls
-                span#ai.controls
-                    label Smart AI
-                        input(type='radio' value='smart' name='ai' checked)
-                    label Dumb AI
-                        input(type='radio' value='dumb' name='ai')
                 span#reset.controls
                     input#btnReset(type='button' value='Reset')
 

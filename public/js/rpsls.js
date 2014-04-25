@@ -21,6 +21,10 @@ var R = {
 
     seen: {'rock': 0, 'paper': 0, 'scissors': 0, 'spock': 0, 'lizard': 0},
 
+    maxHold: 10, // Handles how many moves it's seen last.
+
+    lastXMoves: [],
+
     reset: function () {
         var that = this;
 
@@ -35,19 +39,11 @@ var R = {
         });
     },
 
-    randomMove: function (moveArray) {
-        var keys = moveArray || this.keys;
-
-        return keys[Math.floor(Math.random() * keys.length)];
-    },
-
-    smartMove: function () {
-        var mostUsed = [],
-            movePool = [],
+    getMostUsed: function () {
+        var mostUsed,
             that = this,
             currentMax = -1;
 
-        // determine a list of most used moves.
         $.each(this.keys, function (i, k) {
             var localMax = that.seen[k];
 
@@ -59,19 +55,77 @@ var R = {
             }
         });
 
-        // filter most used move counters down to only ones that will win.
-        // Avoiding ties.
-        $.each(mostUsed, function (i, m) {
+        return mostUsed;
+    },
+
+    getMovePool: function (moves) {
+        var that = this,
+            movePool = [];
+
+        $.each(moves, function (i, m) {
             $.each(that.counters[m], function (j, c) {
-                if (mostUsed.indexOf(c) === -1 && movePool.indexOf(c) === -1) {
+                if (moves.indexOf(c) === -1 && movePool.indexOf(c) === -1) {
                     movePool.push(c);
                 }
             });
         });
 
+        return movePool;
+    },
+
+
+    randomMove: function (moveArray) {
+        var keys = moveArray || this.keys;
+
+        console.log("Random");
+
+        return keys[Math.floor(Math.random() * keys.length)];
+    },
+
+    smartMove: function () {
+        var movePool = this.getMovePool(this.getMostUsed);
+
+        console.log("Smart");
+
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
     },
 
+    smarterMove: function () {
+        var mostUsed = this.getMostUsed(),
+            i = this.lastXMoves.length - 1,
+            lastMove = this.lastXMoves[i--],
+            currentChain = 1,
+            tmp,
+            movePool,
+            that = this;
+
+        console.log("Smarter");
+
+        // Look for a long chain for the last moves.
+        for(; i >= 0; i--) {
+            tmp = this.lastXMoves[i];
+
+            if (tmp === lastMove) {
+                currentChain++;
+            } else {
+                break;
+            }
+        }
+
+        // We had the same thing appear three or more times in a row.
+        // Let's counter that.
+        if (currentChain >= 3) {
+            movePool = this.getMovePool([lastMove]);
+        } else { // Add in the latest move 
+            if (mostUsed.indexOf(lastMove) === -1) {
+                mostUsed.push(lastMove);
+            }
+
+            movePool = this.getMovePool(mostUsed)
+        }
+
+        return this.randomMove(movePool.length > 0 ? movePool : undefined);
+    },
 
     // Borrowed from MDN.
     prettyPercent: function (num) {
@@ -90,6 +144,13 @@ var R = {
         ++stats.total;
 
         this.seen[p1]++;
+        this.seen.total++;
+        this.lastXMoves.push(p1);
+
+        // Sliding array of last maxHold moves.
+        if (this.lastXMoves.length === this.maxHold) {
+            this.lastXMoves = this.lastXMoves.slice(1);
+        }
 
         if (p1 === p2) {
             ++stats.ties;

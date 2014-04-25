@@ -59,9 +59,20 @@ $(document).ready(function () {
     $("input[value='Random']").click(function () {
         var $this = $(this),
             $ul = $this.siblings("ul"),
+            type = $this.attr("data-type"),
             move;
 
-        move = $("input[value='smart']").is(":checked") ? R.smartMove() : R.randomMove();
+        switch ($("input[type='radio'][name='" + type + "']:checked").attr("value")) {
+            case "dumb":
+                move = R.randomMove();
+                break;
+            case "smart":
+                move = R.smartMove();
+                break;
+            case "smarter":
+                move = R.smarterMove();
+                break;
+        }
 
         $ul.children("li").removeClass("selected");
         $ul.children("li[title='" + move + "']").addClass("selected").click();
