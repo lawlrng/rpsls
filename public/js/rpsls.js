@@ -1,17 +1,10 @@
 function MakePlayer() {
-        this.stats = { player: 0, opponent: 0, ties: 0, total: 0 };
         this.seen = { rock: 0, paper: 0, scissors: 0, spock: 0, lizard: 0};
         this.maxHold = 10;
         this.lastXMoves = [];
 }
 
-MakePlayer.prototype.relations = {
-    'rock': {'scissors': 'crushes', 'lizard': 'crushes'},
-    'paper': {'rock': 'covers', 'spock': 'disproves'},
-    'scissors': {'paper': 'cut', 'lizard': 'decapitate'},
-    'spock': {'rock': 'vaporizes', 'scissors': 'smashes'},
-    'lizard': {'spock': 'poison', 'paper': 'eat'}
-};
+MakePlayer.prototype.keys = ['rock', 'paper', 'scissors', 'spock', 'lizard'];
 
 MakePlayer.prototype.counters = {
     'rock': ['paper', 'spock'],
@@ -20,8 +13,6 @@ MakePlayer.prototype.counters = {
     'spock': ['paper', 'lizard'],
     'lizard': ['rock', 'scissors']
 };
-
-MakePlayer.prototype.keys = ['rock', 'paper', 'scissors', 'spock', 'lizard'];
 
 MakePlayer.prototype.reset = function () {
     var that = this;
@@ -36,6 +27,7 @@ MakePlayer.prototype.reset = function () {
         that.stats[k] = 0;
     });
 };
+
 
 MakePlayer.prototype.getMostUsed = function () {
     var mostUsed,
@@ -125,15 +117,26 @@ MakePlayer.prototype.smarterMove = function () {
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
     };
 
-MakePlayer.prototype.prettyPercent = function (num) {
+var R = {
+    stats: { player: 0, opponent: 0, ties: 0, total: 0 },
+
+    relations: {
+        'rock': {'scissors': 'crushes', 'lizard': 'crushes'},
+        'paper': {'rock': 'covers', 'spock': 'disproves'},
+        'scissors': {'paper': 'cut', 'lizard': 'decapitate'},
+        'spock': {'rock': 'vaporizes', 'scissors': 'smashes'},
+        'lizard': {'spock': 'poison', 'paper': 'eat'}
+    },
+
+    prettyPercent: function (num) {
         if (this.stats.total !== 0) {
             return parseFloat(Math.round(num / this.stats.total + 'e+4') + 'e-2');
         } else {
             return 0.0;
         }
-    };
+    },
 
-MakePlayer.prototype.determineWinner = function (p1, p2, cb) {
+    determineWinner: function (p1, p2, cb) {
         var outcomes,
             relations = this.relations,
             stats = this.stats;
@@ -167,4 +170,5 @@ MakePlayer.prototype.determineWinner = function (p1, p2, cb) {
                 cb(p2 + ' ' + outcomes[p1] + ' ' + p1 + '. Player 2 wins!');
             }
         }
-    };
+    }
+};
