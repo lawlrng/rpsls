@@ -48,7 +48,17 @@ MakePlayer.prototype.getMostUsed = function () {
     return mostUsed;
 };
 
-MakePlayer.prototype.getMovePool = function () {
+MakePlayer.prototype.recordOpponentMove = function (move) {
+    this.seen[move]++;
+
+    this.lastXMoves.push(move);
+
+    if (this.lastXMoves.length === this.maxHold) {
+        this.lastXMoves = this.lastXMoves.slice(1);
+    }
+};
+
+MakePlayer.prototype.getMovePool = function (moves) {
         var that = this,
             movePool = [];
 
@@ -63,7 +73,7 @@ MakePlayer.prototype.getMovePool = function () {
         return movePool;
     };
 
-MakePlayer.prototype.randomMove = function () {
+MakePlayer.prototype.randomMove = function (moveArray) {
         var keys = moveArray || this.keys;
 
         console.log("Random");
@@ -142,15 +152,6 @@ var R = {
             stats = this.stats;
 
         ++stats.total;
-
-        this.seen[p1]++;
-        this.seen.total++;
-        this.lastXMoves.push(p1);
-
-        // Sliding array of last maxHold moves.
-        if (this.lastXMoves.length === this.maxHold) {
-            this.lastXMoves = this.lastXMoves.slice(1);
-        }
 
         if (p1 === p2) {
             ++stats.ties;

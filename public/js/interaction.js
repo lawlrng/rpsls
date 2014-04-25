@@ -89,7 +89,9 @@ $(document).ready(function () {
 
     // Called when a move is selected.
     $("div.choiceDisplay").change(function () {
-        var $this = $(this);
+        var $this = $(this),
+            human,
+            computer;
 
         // I don't program in a language at work that has pre/post increment...
         // Leave me alone about it!
@@ -101,9 +103,14 @@ $(document).ready(function () {
                 $("input[data-type='human']").click();
             }
         } else if (selected === 2) {
-            R.determineWinner($("ul[data-type='human'] li.selected").attr("title"),
-                              $("ul[data-type='computer'] li.selected").attr("title"),
-                              displayWinner);
+            human = $("ul[data-type='human'] li.selected").attr("title");
+            computer = $("ul[data-type='computer'] li.selected").attr("title");
+
+            players["human"].recordOpponentMove(computer);
+            players["computer"].recordOpponentMove(human);
+
+            R.determineWinner(human, computer, displayWinner);
+
             selected = 0;
         }
     });
