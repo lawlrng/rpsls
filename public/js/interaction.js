@@ -17,13 +17,13 @@ $(document).ready(function () {
         },
 
         getMoveFunc = function (type) {
-            switch ($("input[type='radio'][data-type='" + type + "']:selected").attr("value")) {
+            switch ($("input[type='radio'][name='" + type + "']:checked").attr("value")) {
                 case "dumb":
-                    return players[type].randomMove();
+                    return players[type].randomMove;
                 case "smart":
-                    return players[type].smartMove();
+                    return players[type].smartMove;
                 case "smarter":
-                    return players[type].smarterMove();
+                    return players[type].smarterMove;
             }
         },
 
@@ -31,8 +31,6 @@ $(document).ready(function () {
             var pl = stats.player,
                 cp = stats.comp,
                 ti = stats.ties;
-
-            console.log(cp);
 
             $("#humanStats").text(pl + ' - ' + R.prettyPercent(pl) + '%');
             $("#computerStats").text(cp + ' - ' + R.prettyPercent(cp) + '%');
@@ -82,16 +80,16 @@ $(document).ready(function () {
         $ul.children("li[title='" + move + "']").addClass("selected").click();
     });
 
-    $("#btnSimulate").click(function () {
+    $("#btnSimulation").click(function () {
         var human = players['human'],
-            computer = player['computer'],
+            computer = players['computer'],
             humanMove = getMoveFunc('human'),
             computerMove = getMoveFunc('computer'),
             tmpHuman,
             tmpComputer,
             i = 10000;
 
-        for (; i > 0; i++) {
+        for (; i > 0; i--) {
             tmpHuman = humanMove();
             tmpComputer = computerMove();
             R.determineWinner(tmpHuman, tmpComputer);
