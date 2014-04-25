@@ -82,10 +82,10 @@ $(document).ready(function () {
     });
 
     // Resets stats, radio selection, 
-    $("#btnReset").click(function () {
-        reset();
-        selected = 0;
-    });
+//    $("#btnReset").click(function () {
+//        reset();
+//        selected = 0;
+//    });
 
     // Called when a move is selected.
     $("div.choiceDisplay").change(function () {
