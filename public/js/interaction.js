@@ -15,6 +15,8 @@ $(document).ready(function () {
 
             updateStats(R.stats);
 
+            $("#txtSimulation").val(10000);
+
             $("input[value='smarter']").prop("checked", true);
             $("div.choiceDisplay").empty();
 
@@ -94,7 +96,7 @@ $(document).ready(function () {
             computerMove = getMoveFunc('computer'),
             tmpHuman,
             tmpComputer,
-            i = 10000;
+            i = $("#txtSimulation").val();
 
         for (; i > 0; i--) {
             tmpHuman = humanMove.call(human);
