@@ -1,59 +1,59 @@
-function MakePlayer() {
+var MakePlayer = function () {
         this.seen = { rock: 0, paper: 0, scissors: 0, spock: 0, lizard: 0};
         this.maxHold = 10;
         this.lastXMoves = [];
 }
 
-MakePlayer.prototype.keys = ['rock', 'paper', 'scissors', 'spock', 'lizard'];
+MakePlayer.prototype = {
+    keys: ['rock', 'paper', 'scissors', 'spock', 'lizard'],
 
-MakePlayer.prototype.counters = {
-    'rock': ['paper', 'spock'],
-    'paper': ['scissors', 'lizard'],
-    'scissors': ['rock', 'spock'],
-    'spock': ['paper', 'lizard'],
-    'lizard': ['rock', 'scissors']
-};
+    counters: {
+        'rock': ['paper', 'spock'],
+        'paper': ['scissors', 'lizard'],
+        'scissors': ['rock', 'spock'],
+        'spock': ['paper', 'lizard'],
+        'lizard': ['rock', 'scissors']
+    },
+    
+    reset: function () {
+       var that = this;
 
-MakePlayer.prototype.reset = function () {
-    var that = this;
+       // reset the seen values.
+       $.each(Object.keys(this.seen), function (i, k) {
+           that.seen[k] = 0;
+       });
+    },
 
-    // reset the seen values.
-    $.each(Object.keys(this.seen), function (i, k) {
-        that.seen[k] = 0;
-    });
-};
+    getMostUsed: function () {
+        var mostUsed;
+            that = this,
+            currentMax = -1;
 
+        $.each(this.keys, function (i, k) {
+            var localMax = that.seen[k];
 
-MakePlayer.prototype.getMostUsed = function () {
-    var mostUsed,
-        that = this,
-        currentMax = -1;
+            if (localMax > currentMax) {
+                mostUsed = [k];
+                currentMax = localMax;
+            } else if (localMax === currentMax) {
+                mostUsed.push(k);
+            }
+        });
 
-    $.each(this.keys, function (i, k) {
-        var localMax = that.seen[k];
+        return mostUsed;
+    },
 
-        if (localMax > currentMax) {
-            mostUsed = [k];
-            currentMax = localMax;
-        } else if (localMax === currentMax) {
-            mostUsed.push(k);
+    recordOpponentMove: function (move) {
+        this.seen[move]++;
+
+        this.lastXMoves.push(move);
+
+        if (this.lastXMoves.length === this.maxHold) {
+            this.lastXMoves = this.lastXMoves.slice(1);
         }
-    });
+    },
 
-    return mostUsed;
-};
-
-MakePlayer.prototype.recordOpponentMove = function (move) {
-    this.seen[move]++;
-
-    this.lastXMoves.push(move);
-
-    if (this.lastXMoves.length === this.maxHold) {
-        this.lastXMoves = this.lastXMoves.slice(1);
-    }
-};
-
-MakePlayer.prototype.getMovePool = function (moves) {
+    getMovePool: function (moves) {
         var that = this,
             movePool = [];
 
@@ -66,22 +66,21 @@ MakePlayer.prototype.getMovePool = function (moves) {
         });
 
         return movePool;
-    };
+    },
 
-MakePlayer.prototype.randomMove = function (moveArray) {
+    randomMove: function (moveArray) {
         var keys = moveArray || this.keys;
 
         return keys[Math.floor(Math.random() * keys.length)];
-    };
+    },
 
-MakePlayer.prototype.smartMove = function () {
+    smartMove: function () {
         var movePool = this.getMovePool(this.getMostUsed());
 
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
-    };
+    },
 
-MakePlayer.prototype.smarterMove = function () {
-
+    smarterMove: function () {
         var mostUsed = this.getMostUsed(),
             i = this.lastXMoves.length - 1,
             lastMove = this.lastXMoves[i--],
@@ -114,7 +113,8 @@ MakePlayer.prototype.smarterMove = function () {
         }
 
         return this.randomMove(movePool.length > 0 ? movePool : undefined);
-    };
+    }
+};
 
 var R = {
     stats: { player: 0, comp: 0, ties: 0, total: 0 },

@@ -73,8 +73,10 @@ $(document).ready(function () {
         var $this = $(this),
             $ul = $this.siblings("ul"),
             type = $this.attr("data-type"),
-            player = players[type],
-            move = getMoveFunc(type)();
+
+            // .call is needed otherwise the this in the move function
+            // references the global window instead of the player.
+            move = getMoveFunc(type).call(players[type]);
 
         $ul.children("li").removeClass("selected");
         $ul.children("li[title='" + move + "']").addClass("selected").click();
@@ -90,8 +92,8 @@ $(document).ready(function () {
             i = 10000;
 
         for (; i > 0; i--) {
-            tmpHuman = humanMove();
-            tmpComputer = computerMove();
+            tmpHuman = humanMove.call(human);
+            tmpComputer = computerMove.call(computer);
             R.determineWinner(tmpHuman, tmpComputer);
         }
 
