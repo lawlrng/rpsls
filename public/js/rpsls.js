@@ -20,7 +20,7 @@ MakePlayer.prototype = {
 
        // reset the seen values.
        $.each(Object.keys(this.seen), function (i, k) {
-           that.seen[k] = 0;
+            that.seen[k] = 0;
        });
     },
 
@@ -128,8 +128,10 @@ var R = {
     },
 
     reset: function () {
-        $.each(this.stats, function (i, k) {
-            stats[k] = 0;
+        var that = this;
+
+        $.each(this.stats, function (k) {
+            that.stats[k] = 0;
         });
     },
 
